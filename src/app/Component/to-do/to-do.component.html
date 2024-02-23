@@ -1,0 +1,79 @@
+<div>
+  <h1 class="text-center text-primary">{{ title }}</h1>
+  <img
+    width="300"
+    height="300"
+    [src]="imageSrc"
+    alt="To Do List"
+    class="img-fluid mx-auto d-block mb-3"
+  />
+  <div class="container bg-light p-3">
+    <form (submit)="addTask($event, taskInput)" class="row">
+      <div class="col-md-8 col-lg-9 col-xl-10">
+        <input
+          #taskInput
+          type="text"
+          class="form-control"
+          placeholder="New Task"
+        />
+      </div>
+      <div class="col-md-4 col-lg-3 col-xl-2 mt-3 mt-md-0 text-lg-end">
+        <button type="submit" class="btn btn-primary">Add Task</button>
+        <button
+          type="button"
+          class="btn btn-outline-danger ms-2"
+          (click)="cancel()"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+    <div class="row mt-3">
+      <div class="col">
+        <div class="table-responsive">
+          @if(tasks.length){
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Item</th>
+                <th>Edit</th>
+                <th>Remove</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (task of tasks; track $index ) {
+              <tr>
+                <td>
+                  <input
+                    type="checkbox"
+                    [checked]="task.completed"
+                    (click)="toggleCompleted(task)"
+                    class="cursor-pointer caption-top"
+                  />
+                </td>
+                <td (click)="toggleCompleted(task)" class="cursor-pointer">
+                  {{ task.name }}
+                </td>
+                <td>
+                  <button (click)="editTask($index)" class="btn btn-primary">
+                    Edit
+                  </button>
+                </td>
+                <td>
+                  <button (click)="deleteTask($index)" class="btn btn-danger">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+          } @else {
+          <p class="text-center">No Task Found</p>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
